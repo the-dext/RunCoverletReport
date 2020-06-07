@@ -3,8 +3,8 @@ A Visual Studio 2019 Extension to run Coverlet and Report Generator
 
 ## What is it
 The aim of this extension is to make something similar to the functionality provided by the Enterprise edition of Visual Studio, without the cost.
-RunCoverletReport is a Visual Studio 2019 extension builds upon the excellet Coverlet and Report Generator that allows you to run dotnet tests with Coverlet to collect code coverage results. These are then used to generate a report using Report Generator, which will be automatically opened in a Visual Studio window.
-The Coverlet report will also be used to provide syntax highlighting in Visual Studio C# editor windows.
+RunCoverletReport builds upon the excellent Coverlet and Report Generator tools that allow you to collect code coverage results from unit tests.
+This extension will run the two tools and then display the report file within visual studio as well as use the Coverlet output to provide syntax highlighting.
 
 For more information about coverlet see 
 https://github.com/coverlet-coverage/coverlet
