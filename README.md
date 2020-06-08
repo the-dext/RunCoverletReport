@@ -1,4 +1,4 @@
-# RunCoverletReport
+# Run Coverlet Report
 A Visual Studio 2019 Extension to make showing code coverage easy.
 
 ## What is it
