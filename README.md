@@ -1,12 +1,12 @@
 # RunCoverletReport
-A Visual Studio 2019 Extension to run Coverlet and Report Generator
+A Visual Studio 2019 Extension to make showing code coverage easy.
 
 ## What is it
 The aim of this extension is to make something similar to the functionality provided by the Enterprise edition of Visual Studio, without the cost.
-RunCoverletReport builds upon the excellent Coverlet and Report Generator tools that allow you to collect code coverage results from unit tests.
+Run Coverlet Report builds upon the excellent Coverlet and Report Generator tools that allow you to collect code coverage results from unit tests.
 This extension will run the two tools and then display the report file within visual studio as well as use the Coverlet output to provide syntax highlighting.
 
-For more information about coverlet see
+For more information about coverlet see 
 https://github.com/coverlet-coverage/coverlet
 
 For more information about Report Generator see
@@ -14,8 +14,7 @@ https://danielpalme.github.io/ReportGenerator/
 
 ## Installation
 
-1. Install the Visual Studio extesion.
-After installing the extension there are a couple more steps that are necessary...
+1. Install the Visual Studio extension. 
 
 2. Install Report Generator as a global tool
 Follow this guide https://github.com/danielpalme/ReportGenerator/releases
@@ -24,9 +23,8 @@ Follow this guide https://github.com/danielpalme/ReportGenerator/releases
 
 ## Usage
 Once installed click Tools | Run Code Coverage in Visual Studio.
-Dotnet test will then execute your unit tests and after a few moments (provided all of your tests pass) a report generator window will open shoing the ReportGenerator output.
-C# syntax in your .cs files will also be highlighted to indicate your code coverage.
-A red background for lines that are not covered, a green background for lines that are covered, and an orange background for lines that are part covered.
+'dotnet test' will then execute your unit tests and after a few moments **(provided all of your tests pass)** a report generator window will open showing the ReportGenerator output. 
+C# syntax in your .cs files will also be highlighted to indicate your code coverage. 
+A red background for lines that are not covered, a green background for lines that are covered.
 
-
-![Run Coverlet Report Preview](src/RunCoverletReport/RunCoverletReport/Art/RunCoverletReportPreview.gif)
+![Run Coverlet Report Preview](src/RunCoverletReport/Art/RunCoverletReportPreview.gif)

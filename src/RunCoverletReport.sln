@@ -7,8 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunCoverletReport", "RunCov
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A981C0A-4287-4895-AC98-8F20A2F3106D}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\.gitignore = ..\..\.gitignore
-		..\..\README.md = ..\..\README.md
+		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunCoverletReport.Tests", "RunCoverletReport.Tests\RunCoverletReport.Tests.csproj", "{3BC702DD-A0F9-40BF-B42F-6F67CED7D061}"
