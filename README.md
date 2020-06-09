@@ -14,7 +14,7 @@ https://danielpalme.github.io/ReportGenerator/
 
 ## Installation
 
-1. Install the Visual Studio extension. 
+1. Install the Visual Studio extension (from the extensions menu in Visual Studio)
 
 2. Install Report Generator as a global tool
 Follow this guide https://github.com/danielpalme/ReportGenerator/releases
@@ -25,6 +25,17 @@ Follow this guide https://github.com/danielpalme/ReportGenerator/releases
 Once installed click Tools | Run Code Coverage in Visual Studio.
 'dotnet test' will then execute your unit tests and after a few moments **(provided all of your tests pass)** a report generator window will open showing the ReportGenerator output. 
 C# syntax in your .cs files will also be highlighted to indicate your code coverage. 
-A red background for lines that are not covered, a green background for lines that are covered.
+
+* Red background = uncovered code.
+* Green background = covered code
+* Orange background = a part covered line.
 
 ![Run Coverlet Report Preview](src/RunCoverletReport/Art/RunCoverletReportPreview.gif)
+
+## Version History
+
+### 1.7
+Tweaked colours to make them stand out more, on some systems the transparency was too high which caused them to not show up.
+
+### 1.6
+First version made public on the Visual Studio Marketplace 

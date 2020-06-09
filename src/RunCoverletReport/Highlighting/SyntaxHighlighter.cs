@@ -29,7 +29,7 @@ namespace RunCoverletReport.Highlighting
             {
                 var penBrush = new SolidColorBrush(Colors.Green);
                 penBrush.Freeze();
-                CoveredPen = new Pen(penBrush, 0.8);
+                CoveredPen = new Pen(penBrush, 2);
                 CoveredPen.Freeze();
             }
 
@@ -48,7 +48,7 @@ namespace RunCoverletReport.Highlighting
             {
                 var penBrush3 = new SolidColorBrush(Colors.DarkOrange);
                 penBrush3.Freeze();
-                PartCoveredPen = new Pen(penBrush3, 0.8);
+                PartCoveredPen = new Pen(penBrush3, 2);
                 PartCoveredPen.Freeze();
             }
 
@@ -67,7 +67,7 @@ namespace RunCoverletReport.Highlighting
             {
                 var penBrush3 = new SolidColorBrush(Colors.DarkRed);
                 penBrush3.Freeze();
-                UnCoveredPen = new Pen(penBrush3, 0.8);
+                UnCoveredPen = new Pen(penBrush3, 2);
                 UnCoveredPen.Freeze();
             }
 

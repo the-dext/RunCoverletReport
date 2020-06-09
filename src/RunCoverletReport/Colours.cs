@@ -13,7 +13,7 @@
         /// <returns>The <see cref="Color"/>.</returns>
         public static Color Covered()
         {
-            return Color.FromArgb(50, 200, 255, 148);
+            return Color.FromArgb(100, 200, 255, 148);
         }
 
         /// <summary>
@@ -22,7 +22,7 @@
         /// <returns>The <see cref="Color"/>.</returns>
         public static Color UnCovered()
         {
-            return Color.FromArgb(50, 255, 161, 161);
+            return Color.FromArgb(100, 255, 161, 161);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@
         /// <returns></returns>
         public static Color PartCovered()
         {
-            return Color.FromArgb(50, 255, 195, 106);
+            return Color.FromArgb(100, 255, 195, 106);
         }
     }
 }
