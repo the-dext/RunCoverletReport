@@ -34,6 +34,12 @@ C# syntax in your .cs files will also be highlighted to indicate your code cover
 
 ## Version History
 
+### 1.8
+Added options page (Tools | Options | Run Coverlet Report) to allow user customisation of highlight colours and to specify assemblies & types that should be excluded from code coverage.
+
+* Syntax for hightlight colours is sRGB format (alpha, red, green ,blue) for example #50FFFFFF*
+* Syntax for specifying assemblies to exclude is a comma separated set of [assembly-filter]type-filter values. For example the default value of _[*.Tests?]*,[*.UITests?]*_ will exclude all types from assemblies with a '.Test' or '.Tests' suffix and assemblies with a '.UITest' or '.UITests' suffix. 
+
 ### 1.7
 Tweaked colours to make them stand out more, on some systems the transparency was too high which caused them to not show up.
 

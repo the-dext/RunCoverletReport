@@ -68,5 +68,14 @@ namespace RunCoverletReport
                 return page.PartCoveredColour;
             }
         }
+
+        public string ExcludeAssembliesPattern
+        {
+            get
+            {
+                OptionPageGrid page = (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid));
+                return page.ExcludeAssembliesPattern;
+            }
+        }
     }
 }

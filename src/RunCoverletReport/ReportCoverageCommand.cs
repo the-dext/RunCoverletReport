@@ -103,7 +103,6 @@
         private void OpenReport(IVsWebBrowsingService webBrowserSvc, string report)
         {
             // ThreadHelper.ThrowIfNotOnUIThread();
-
             try
             {
                 ThreadHelper.Generic.BeginInvoke(() => webBrowserSvc.Navigate(report, 0, out _));
@@ -199,7 +198,13 @@
         {
             try
             {
-                var args = $"test \"{slnFile}\" /p:CollectCoverage=true /p:CoverletOutput=\"{testOutputFolder}coverage\" /p:CoverletOutputFormat=\"json%2ccobertura\" /p:MergeWith=\"{testOutputFolder}coverage.json\" -m:1";
+                string exludeAssembliesArg = string.Empty;
+                if (!string.IsNullOrWhiteSpace(CoverageResultsProvider.Instance.ExcludeAssembliesPattern))
+                {
+                    exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.ExcludeAssembliesPattern}\"";
+                }
+
+                var args = $"test \"{slnFile}\" /p:CollectCoverage=true /p:CoverletOutput=\"{testOutputFolder}coverage\" {exludeAssembliesArg} /p:CoverletOutputFormat=\"json%2ccobertura\" /p:MergeWith=\"{testOutputFolder}coverage.json\" -m:1";
                 Debug.WriteLine("---CoverletRunner: running command: dotnet " + args);
 
                 var procStartInfo = new ProcessStartInfo("dotnet", args)

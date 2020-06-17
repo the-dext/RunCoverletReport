@@ -9,32 +9,42 @@
         private Color coveredColor = Color.FromArgb(50, 200, 255, 148);
         private Color uncoveredColor = Color.FromArgb(50, 255, 161, 161);
         private Color partCoveredColor = Color.FromArgb(50, 255, 195, 106);
+        private string excludeAssembliesPattern = "[*.Tests?]*,[*.UITests?]*";
 
         [Category("Run Coverlet Report")]
-        [DisplayName("Covered Code Highlight Colour")]
+        [DisplayName("Highlight - Covered Code Colour")]
         [Description("ARGB Colour for covered code")]
         public Color CoveredColour
         {
-            get { return coveredColor; }
-            set { coveredColor = value; }
+            get { return this.coveredColor; }
+            set { this.coveredColor = value; }
         }
 
         [Category("Run Coverlet Report")]
-        [DisplayName("Uncovered Code Highlight Colour")]
+        [DisplayName("Highlight - Uncovered Code Colour")]
         [Description("ARGB Colour for covered code")]
         public Color UncoveredColour
         {
-            get { return uncoveredColor; }
-            set { uncoveredColor = value; }
+            get { return this.uncoveredColor; }
+            set { this.uncoveredColor = value; }
         }
 
         [Category("Run Coverlet Report")]
-        [DisplayName("Part Covered Code Highlight Colour")]
+        [DisplayName("Highlight - Part Covered Code Colour")]
         [Description("ARGB Colour for covered code")]
         public Color PartCoveredColour
         {
-            get { return partCoveredColor; }
-            set { partCoveredColor = value; }
+            get { return this.partCoveredColor; }
+            set { this.partCoveredColor = value; }
         }
+        
+        [Category("Run Coverlet Report")]
+        [DisplayName("Exclude Assemblies File Patterns")]
+        [Description("Comma separated file patterns for assemblies and types to be excluded from code coverage. Follows Coverlet standards. For example [*.tests]*,[*.uitests]* will ignore all types in assemblies with a .tests or .uitests suffix")]
+        public string ExcludeAssembliesPattern 
+        { 
+            get { return this.excludeAssembliesPattern; }
+            set { this.excludeAssembliesPattern = value; } 
+        }        
     }
 }
