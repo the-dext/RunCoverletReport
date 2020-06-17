@@ -54,6 +54,10 @@
     <Compile Include="CoverageResults\Models\LineResult.cs" />
     <Compile Include="Colours.cs" />
     <Compile Include="Highlighting\SyntaxHighlighter.cs" />
+    <Compile Include="Options\OptionPageGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Options\OptionValues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportCoverageCommand.cs" />
     <Compile Include="RunCoverletReportPackage.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="ToggleCoverageHighlighting.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Options\Resources\VSPackage.ico" />
     <Content Include="Resources\License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

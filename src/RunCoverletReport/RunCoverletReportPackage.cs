@@ -1,18 +1,21 @@
-﻿namespace RunCoverletReport
-{
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Threading;
-    using Microsoft.VisualStudio.Shell;
-    using RunCoverletReport.CoverageResults;
-    using Task = System.Threading.Tasks.Task;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Threading;
+using Microsoft.VisualStudio.Shell;
+using RunCoverletReport.CoverageResults;
+using Task = System.Threading.Tasks.Task;
+using RunCoverletReport.Options;
+using System.Windows.Media;
 
+namespace RunCoverletReport
+{
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
     /// </summary>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(RunCoverletReportPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
+    [ProvideOptionPage(typeof(OptionPageGrid), "Run Coverlet Report", "Options", 0, 0, true)]
     public sealed class RunCoverletReportPackage : AsyncPackage
     {
         /// <summary>
@@ -33,10 +36,37 @@
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
-            CoverageResultsProvider.Initialise();
+            CoverageResultsProvider.Initialise(this);
 
             await ReportCoverageCommand.InitializeAsync(this);
             await ToggleCoverageHighlighting.InitializeAsync(this);
+        }
+
+        public Color CoveredColour
+        {
+            get
+            {
+                OptionPageGrid page = (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid));
+                return page.CoveredColour;
+            }
+        }
+
+        public Color UncoveredColour
+        {
+            get
+            {
+                OptionPageGrid page = (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid));
+                return page.UncoveredColour;
+            }
+        }
+
+        public Color PartCoveredColour
+        {
+            get
+            {
+                OptionPageGrid page = (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid));
+                return page.PartCoveredColour;
+            }
         }
     }
 }

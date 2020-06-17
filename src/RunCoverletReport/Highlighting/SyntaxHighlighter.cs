@@ -4,74 +4,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using RunCoverletReport.CoverageResults;
 
 namespace RunCoverletReport.Highlighting
 {
     public class SyntaxHighlighter
     {
-        private static SolidColorBrush CoveredBrush;
-        private static Pen CoveredPen;
-        private static SolidColorBrush PartCoveredBrush;
-        private static Pen PartCoveredPen;
-        private static Pen UnCoveredPen;
-        private static SolidColorBrush UnCoveredBrush;
 
         public static GeometryDrawing CreateCoveredHighlight(Geometry geometry)
         {
-            if (CoveredBrush == null)
-            // Create the pen and brush to color the box behind covered and uncovered text
-            {
-                CoveredBrush = new SolidColorBrush(Colours.Covered());
-                CoveredBrush.Freeze();
-            }
+            var coveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.CoveredColor);
+            coveredBrush.Freeze();
 
-            if (CoveredPen == null)
-            {
-                var penBrush = new SolidColorBrush(Colors.Green);
-                penBrush.Freeze();
-                CoveredPen = new Pen(penBrush, 2);
-                CoveredPen.Freeze();
-            }
+            var penBrush = new SolidColorBrush(Colors.Green);
+            penBrush.Freeze();
+            var coveredPen = new Pen(penBrush, 2);
+            coveredPen.Freeze();
 
-            return new GeometryDrawing(CoveredBrush, CoveredPen, geometry);
+            return new GeometryDrawing(coveredBrush, coveredPen, geometry);
         }
 
         public static GeometryDrawing CreatePartCoveredHighlight(Geometry geometry)
         {
-            if (PartCoveredBrush == null)
-            {
-                PartCoveredBrush = new SolidColorBrush(Colours.PartCovered());
-                PartCoveredBrush.Freeze();
-            }
 
-            if (PartCoveredPen == null)
-            {
-                var penBrush3 = new SolidColorBrush(Colors.DarkOrange);
-                penBrush3.Freeze();
-                PartCoveredPen = new Pen(penBrush3, 2);
-                PartCoveredPen.Freeze();
-            }
+            var partCoveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.PartCoveredColor);
+            partCoveredBrush.Freeze();
 
-            return new GeometryDrawing(PartCoveredBrush, PartCoveredPen, geometry);
+            var penBrush3 = new SolidColorBrush(Colors.DarkOrange);
+            penBrush3.Freeze();
+            var partCoveredPen = new Pen(penBrush3, 2);
+            partCoveredPen.Freeze();
+
+            return new GeometryDrawing(partCoveredBrush, partCoveredPen, geometry);
         }
 
         internal static GeometryDrawing CreateUnCoveredHighlight(Geometry geometry)
         {
-            if (UnCoveredBrush == null)
-            {
-                UnCoveredBrush = new SolidColorBrush(Colours.UnCovered());
-                UnCoveredBrush.Freeze();
-            }
+            var unCoveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.UncoveredColor);
+            unCoveredBrush.Freeze();
 
-            if (UnCoveredPen == null)
-            {
-                var penBrush3 = new SolidColorBrush(Colors.DarkRed);
-                penBrush3.Freeze();
-                UnCoveredPen = new Pen(penBrush3, 2);
-                UnCoveredPen.Freeze();
-            }
+            var penBrush3 = new SolidColorBrush(Colors.DarkRed);
+            penBrush3.Freeze();
+            var unCoveredPen = new Pen(penBrush3, 2);
+            unCoveredPen.Freeze();
 
-            return new GeometryDrawing(UnCoveredBrush, UnCoveredPen, geometry);
+            return new GeometryDrawing(unCoveredBrush, unCoveredPen, geometry);
         }
     }
 }

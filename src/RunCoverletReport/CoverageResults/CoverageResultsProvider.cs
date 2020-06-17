@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.Composition;
     using System.Diagnostics;
+    using System.Windows.Media;
     using RunCoverletReport.CoverageResults.Models;
 
     /// <summary>
@@ -11,12 +12,14 @@
     [Export]
     public class CoverageResultsProvider
     {
+        private RunCoverletReportPackage runCoverletReportPackage;
+
         /// <summary>
         /// Prevents a default instance of the <see cref="CoverageResultsProvider"/> class from being created.
         /// </summary>
-        static CoverageResultsProvider()
+        public CoverageResultsProvider(RunCoverletReportPackage runCoverletReportPackage)
         {
-            Initialise();
+            this.runCoverletReportPackage = runCoverletReportPackage;
         }
 
         /// <summary>
@@ -40,14 +43,18 @@
             }
         }
 
+        public Color CoveredColor { get => this.runCoverletReportPackage.CoveredColour; }
+        public Color PartCoveredColor { get => this.runCoverletReportPackage.PartCoveredColour; }
+        public Color UncoveredColor { get => this.runCoverletReportPackage.UncoveredColour; }
+
         /// <summary>
         /// The Initialise.
         /// </summary>
-        public static void Initialise()
+        public static void Initialise(RunCoverletReportPackage runCoverletReportPackage)
         {
             if (Instance == null)
             {
-                Instance = new CoverageResultsProvider();
+                Instance = new CoverageResultsProvider(runCoverletReportPackage);
                 _showSyntaxHighlighting = true;
             }
         }
