@@ -201,7 +201,7 @@
                 string exludeAssembliesArg = string.Empty;
                 if (!string.IsNullOrWhiteSpace(CoverageResultsProvider.Instance.ExcludeAssembliesPattern))
                 {
-                    exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.ExcludeAssembliesPattern}\"";
+                    exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
                 }
 
                 var args = $"test \"{slnFile}\" /p:CollectCoverage=true /p:CoverletOutput=\"{testOutputFolder}coverage\" {exludeAssembliesArg} /p:CoverletOutputFormat=\"json%2ccobertura\" /p:MergeWith=\"{testOutputFolder}coverage.json\" -m:1";
