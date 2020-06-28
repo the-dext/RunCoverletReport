@@ -6,18 +6,18 @@
     using RunCoverletReport.CoverageResults.Models;
 
     /// <summary>
-    /// Defines the <see cref="CoverageReader" />.
+    /// Defines the <see cref="CoverageReader"/>.
     /// </summary>
     public class CoverageReader
     {
         /// <summary>
         /// The ReadFile.
         /// </summary>
-        /// <param name="filename">The filename<see cref="string"/>.</param>
+        /// <param name="filename">The filename <see cref="string"/>.</param>
         /// <returns>The <see cref="FileCoverageResults"/>.</returns>
         public FileCoverageResults ReadFile(string filename)
         {
-            if (!filename.EndsWith("coverage.cobertura.xml"))
+            if (!filename.ToLowerInvariant().EndsWith("cobertura.xml"))
             {
                 throw new NotSupportedException("File must be coverage.cobertura.xml");
             }

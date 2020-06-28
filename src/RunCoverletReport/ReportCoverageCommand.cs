@@ -1,14 +1,14 @@
 ﻿namespace RunCoverletReport
 {
-    using System;
-    using System.ComponentModel.Design;
-    using System.Diagnostics;
-    using System.IO;
     using EnvDTE;
     using EnvDTE80;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
     using RunCoverletReport.CoverageResults;
+    using System;
+    using System.ComponentModel.Design;
+    using System.Diagnostics;
+    using System.IO;
     using Task = System.Threading.Tasks.Task;
 
     /// <summary>
@@ -71,8 +71,8 @@
         /// <returns>The <see cref="Task"/>.</returns>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in ReportCoverageCommand's constructor requires
-            // the UI thread.
+            // Switch to the main thread - the call to AddCommand in ReportCoverageCommand's
+            // constructor requires the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             var commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
@@ -98,8 +98,8 @@
         /// <summary>
         /// The OpenReport.
         /// </summary>
-        /// <param name="webBrowserSvc">The webBrowserSvc<see cref="IVsWebBrowsingService"/>.</param>
-        /// <param name="report">The report<see cref="string"/>.</param>
+        /// <param name="webBrowserSvc">The webBrowserSvc <see cref="IVsWebBrowsingService"/>.</param>
+        /// <param name="report">The report <see cref="string"/>.</param>
         private void OpenReport(IVsWebBrowsingService webBrowserSvc, string report)
         {
             // ThreadHelper.ThrowIfNotOnUIThread();
@@ -110,15 +110,9 @@
             catch { }
         }
 
-        /// <summary>
-        /// The ParseTestResults.
-        /// </summary>
-        /// <param name="testOutputFolder">The testOutputFolder<see cref="string"/>.</param>
-        private void ParseTestResults(string testOutputFolder)
+        private void ParseTestResults(string file)
         {
             var reader = new CoverageReader();
-
-            var file = $"{testOutputFolder}coverage.cobertura.xml";
 
             var coverageResults = reader.ReadFile(file);
 
@@ -128,35 +122,69 @@
         /// <summary>
         /// The RunCoverage.
         /// </summary>
-        /// <param name="dte">The dte<see cref="DTE2"/>.</param>
-        /// <param name="webBrowserSvc">The webBrowserSvc<see cref="IVsWebBrowsingService"/>.</param>
+        /// <param name="dte">The dte <see cref="DTE2"/>.</param>
+        /// <param name="webBrowserSvc">The webBrowserSvc <see cref="IVsWebBrowsingService"/>.</param>
         private void RunCoverage(DTE2 dte, IVsWebBrowsingService webBrowserSvc)
         {
-
             var slnFile = dte.Solution.FileName;
-            var testOutputFolder = $"{Path.GetTempPath()}{Guid.NewGuid().ToString().ToLowerInvariant()}\\";
-
+            string testOutputFolder = this.GetOutputFolder();
             Debug.WriteLine("---CoverletRunner: Set output folder to " + testOutputFolder);
 
-            this.RunCoverageTool(slnFile, testOutputFolder);
+            var useMSBuild = CoverageResultsProvider.Instance.Options.UseMSBuild;
+
+            (string cmd, string args) cmdArgs;
+            if (!useMSBuild)
+            {
+                cmdArgs = this.GetCommandArgsForCoverletCollector(slnFile, testOutputFolder);
+            }
+            else
+            {
+                cmdArgs = this.GetCommandArgsForCoverletMSBuild(slnFile, testOutputFolder);
+            }
+
+            this.RunCoverageTool(cmdArgs.cmd, cmdArgs.args);
+
             var report = this.RunCoverageReporter(testOutputFolder);
 
-            this.ParseTestResults(testOutputFolder);
+            this.OpenReport(webBrowserSvc, report.reportFile);
 
-            this.OpenReport(webBrowserSvc, report);
+            this.ParseTestResults(report.coberturaXmlFile);
+        }
+
+        private string GetOutputFolder()
+        {
+#if FIXED_OUTPUT_FOLDER
+            var testOutputFolder = $"{Path.GetTempPath()}runcoverlet-report\\";
+#else
+            var testOutputFolder = $"{Path.GetTempPath()}{Guid.NewGuid().ToString().ToLowerInvariant()}\\";
+#endif
+            return testOutputFolder;
+        }
+
+        private (string cmd, string args) GetCommandArgsForCoverletMSBuild(string slnFile, string testOutputFolder)
+        {
+            string exludeAssembliesArg = string.Empty;
+            if (!string.IsNullOrWhiteSpace(CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern))
+            {
+                exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
+            }
+
+            string args = $"test \"{slnFile}\" /p:CollectCoverage=true /p:CoverletOutput=\"{testOutputFolder}coverage\" {exludeAssembliesArg} /p:CoverletOutputFormat=\"json%2ccobertura\" /p:MergeWith=\"{testOutputFolder}coverage.json\" -m:1";
+
+            return ("dotnet", args);
         }
 
         /// <summary>
         /// The RunCoverageReporter.
         /// </summary>
-        /// <param name="testOutputFolder">The testOutputFolder<see cref="string"/>.</param>
+        /// <param name="testOutputFolder">The testOutputFolder <see cref="string"/>.</param>
         /// <returns>The <see cref="string"/>.</returns>
-        private string RunCoverageReporter(string testOutputFolder)
+        private (string reportFile, string coberturaXmlFile) RunCoverageReporter(string testOutputFolder)
         {
             // report
             try
             {
-                var args = $"-reports:{testOutputFolder}/**/*.cobertura.xml -targetdir:{testOutputFolder}/coverageReport -reporttypes:Html";
+                var args = $"-reports:{testOutputFolder}/**/*.cobertura.xml -targetdir:{testOutputFolder}/coverageReport -reporttypes:Html;Cobertura";
                 Debug.WriteLine("---CoverletRunner: running command: reportgenerator " + args);
 
                 var procStartInfo = new ProcessStartInfo("reportgenerator", args)
@@ -174,7 +202,7 @@
                 process.WaitForExit();
 
                 // return the report
-                return $"{testOutputFolder}coverageReport\\index.htm";
+                return ($"{testOutputFolder}coverageReport\\index.htm", $"{testOutputFolder}coverageReport\\Cobertura.xml");
             }
             catch (Exception ex)
             {
@@ -189,25 +217,31 @@
             }
         }
 
+        private (string cmd, string args) GetCommandArgsForCoverletCollector(string slnFile, string testOutputFolder)
+        {
+            string exludeAssembliesArg = string.Empty;
+            if (!string.IsNullOrWhiteSpace(CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern))
+            {
+                exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
+            }
+
+            string args = $"test \"{slnFile}\" /p:CoverletOutputFormat=\"cobertura\" --collect:\"XPlat Code Coverage\" --results-directory:\"{testOutputFolder}coverage\"";
+
+            return ("dotnet", args);
+        }
+
         /// <summary>
         /// The RunCoverageTool.
         /// </summary>
-        /// <param name="slnFile">The slnFile<see cref="string"/>.</param>
-        /// <param name="testOutputFolder">The testOutputFolder<see cref="string"/>.</param>
-        private void RunCoverageTool(string slnFile, string testOutputFolder)
+        /// <param name="slnFile">The slnFile <see cref="string"/>.</param>
+        /// <param name="testOutputFolder">The testOutputFolder <see cref="string"/>.</param>
+        private void RunCoverageTool(string cmd, string args)
         {
             try
             {
-                string exludeAssembliesArg = string.Empty;
-                if (!string.IsNullOrWhiteSpace(CoverageResultsProvider.Instance.ExcludeAssembliesPattern))
-                {
-                    exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
-                }
-
-                var args = $"test \"{slnFile}\" /p:CollectCoverage=true /p:CoverletOutput=\"{testOutputFolder}coverage\" {exludeAssembliesArg} /p:CoverletOutputFormat=\"json%2ccobertura\" /p:MergeWith=\"{testOutputFolder}coverage.json\" -m:1";
                 Debug.WriteLine("---CoverletRunner: running command: dotnet " + args);
 
-                var procStartInfo = new ProcessStartInfo("dotnet", args)
+                var procStartInfo = new ProcessStartInfo(cmd, args)
                 {
                     UseShellExecute = true,
                     RedirectStandardOutput = false,

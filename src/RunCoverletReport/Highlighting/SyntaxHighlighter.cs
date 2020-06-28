@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RunCoverletReport.CoverageResults;
 using System.Windows.Media;
-using RunCoverletReport.CoverageResults;
 
 namespace RunCoverletReport.Highlighting
 {
     public class SyntaxHighlighter
     {
-
         public static GeometryDrawing CreateCoveredHighlight(Geometry geometry)
         {
-            var coveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.CoveredColor);
+            var coveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.Options.CoveredColour);
             coveredBrush.Freeze();
 
             var penBrush = new SolidColorBrush(Colors.Green);
@@ -26,8 +20,7 @@ namespace RunCoverletReport.Highlighting
 
         public static GeometryDrawing CreatePartCoveredHighlight(Geometry geometry)
         {
-
-            var partCoveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.PartCoveredColor);
+            var partCoveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.Options.PartCoveredColour);
             partCoveredBrush.Freeze();
 
             var penBrush3 = new SolidColorBrush(Colors.DarkOrange);
@@ -40,7 +33,7 @@ namespace RunCoverletReport.Highlighting
 
         internal static GeometryDrawing CreateUnCoveredHighlight(Geometry geometry)
         {
-            var unCoveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.UncoveredColor);
+            var unCoveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.Options.UncoveredColour);
             unCoveredBrush.Freeze();
 
             var penBrush3 = new SolidColorBrush(Colors.DarkRed);

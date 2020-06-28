@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="1a4fc182-2715-4040-b982-f76e4c365fbb" Version="1.8.1" Language="en-US" Publisher="Chris Dexter" />
+        <Identity Id="1a4fc182-2715-4040-b982-f76e4c365fbb" Version="1.9.0" Language="en-US" Publisher="Chris Dexter" />
         <DisplayName>Run Coverlet Report</DisplayName>
         <Description xml:space="preserve">An easy to use visual studio 2019 extension to run coverlet code coverage and then use report generator and show results in visual studio with syntax highlighting.
 
@@ -12,6 +12,7 @@ Note: Relies on Coverlet and Report Generator being available.</Description>
         <Icon>Resources\ReportCoverageCommand.png</Icon>
         <PreviewImage>Art\RunCoverletReportPreview.gif</PreviewImage>
         <Tags>code coverage, coverlet, unit testing, tdd</Tags>
+        <Preview>true</Preview>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)" />
