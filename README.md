@@ -19,7 +19,7 @@ https://danielpalme.github.io/ReportGenerator/
 2. Install Report Generator as a global tool
 Follow this guide https://github.com/danielpalme/ReportGenerator/releases
 
-3. In your unit test projects add the Coverlet.Collector nuget package.
+3. In your unit test projects add the Coverlet.MSBuild nuget package (due to a bug Coverlet.Collector support will be added in future).
 
 ## Usage
 Once installed click Tools | Run Code Coverage in Visual Studio.
