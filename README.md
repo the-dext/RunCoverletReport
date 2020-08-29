@@ -22,7 +22,16 @@ Follow this guide https://github.com/danielpalme/ReportGenerator/releases
 3. In your unit test projects add the Coverlet.Collector nuget package.
 
 ## Usage
-Once installed click Tools | Run Code Coverage in Visual Studio.
+
+1. Configure your projects to collect code coverage by following the Quickstart guide here
+https://github.com/coverlet-coverage/coverlet#Quick-Start
+
+2. Configure the integration type used by Run Coverlet Report by setting the integration type that can be found in Tools | Options | Run Coverlet Report.    
+By default Coverlet.Collector is used, but if you get error messages when running the coverage report then check the Coverlet packages you are using, if you're using Coverlet.MSBuild instead of Collector then changing this option should allow coverate collection on your solution.
+Having a mixture of Coverlet.Collector and Coverlet.MSBuild dependencies in your project isn't supported, this extension will expect one or the other.
+
+To collect coverage and view a coverage report click Tools | Run Code Coverage.  
+
 'dotnet test' will then execute your unit tests and after a few moments **(provided all of your tests pass)** a report generator window will open showing the ReportGenerator output.
 C# syntax in your .cs files will also be highlighted to indicate your code coverage.
 
