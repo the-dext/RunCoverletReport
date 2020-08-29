@@ -12,7 +12,6 @@ Note: Relies on Coverlet and Report Generator being available.</Description>
         <Icon>Resources\ReportCoverageCommand.png</Icon>
         <PreviewImage>Art\RunCoverletReportPreview.gif</PreviewImage>
         <Tags>code coverage, coverlet, unit testing, tdd</Tags>
-        <Preview>true</Preview>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)" />
