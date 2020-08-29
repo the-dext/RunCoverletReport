@@ -130,7 +130,7 @@
             string testOutputFolder = this.GetOutputFolder();
             Debug.WriteLine("---CoverletRunner: Set output folder to " + testOutputFolder);
 
-            var useMSBuild = CoverageResultsProvider.Instance.Options.UseMSBuild;
+            var useMSBuild = CoverageResultsProvider.Instance.Options.IntegrationType == Options.IntegrationType.MSBuild;
 
             (string cmd, string args) cmdArgs;
             if (!useMSBuild)

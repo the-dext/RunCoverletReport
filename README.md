@@ -34,6 +34,12 @@ C# syntax in your .cs files will also be highlighted to indicate your code cover
 
 ## Version History
 
+### 1.9
+Configurable Integration Type - Added an option to switch between relying on Coverlet.Collector (default) and Coverlet.MSBuild.
+Change this in Tools | Options | Run Coverlet Report.
+By default Coverlet.Collector is used, but if you get error messages when running the coverage report then check the Coverlet packages you are using, if you're using Coverlet.MSBuild instead of Collector then changing this option should allow coverate collection on your solution.
+Having a mixture of Coverlet.Collector and Coverlet.MSBuild dependencies in your project isn't supported, this extension will expect one or the other.
+
 ### 1.8.1
 Bug fix. When assembly pattern has comma characters these needed to be escaped for coverlet to successfully process the pattern.
 

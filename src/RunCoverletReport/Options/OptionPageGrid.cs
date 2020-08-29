@@ -11,6 +11,7 @@
         private Color partCoveredColor = Color.FromArgb(50, 255, 195, 106);
         private string excludeAssembliesPattern = "[*.Tests?]*,[*.UITests?]*";
         private bool useMSBuild = true;
+        private IntegrationType integrationType = IntegrationType.Collector;
 
         [Category("Run Coverlet Report")]
         [DisplayName("Highlight - Covered Code Colour")]
@@ -49,12 +50,21 @@
         }
 
         [Category("Run Coverlet Report")]
-        [DisplayName("Use Coverlet.MSBuild integration")]
-        [Description("Use Coverlet.MSBuild integration instead of Coverlet.Collector (requires Coverlet.MSBuild packages to be installed into your unit test projects")]
-        public bool UseMSBuild
+        [DisplayName("Integration type")]
+        [Description("Set the integration type to match the Coverlet nuget packages you use. Either Coverlet.MSBuild or Coverlet.Collector.")]
+        public IntegrationType IntegrationType
         {
-            get { return this.useMSBuild; }
-            set { this.useMSBuild = value; }
+            get { return this.integrationType; }
+            set { this.integrationType = value; }
         }
+    }
+
+    public enum IntegrationType
+    {
+        [Description("Coverlet.Collector")]
+        Collector,
+
+        [Description("Coverlet.MSBuild")]
+        MSBuild,
     }
 }
