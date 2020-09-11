@@ -169,7 +169,13 @@
                 exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
             }
 
-            string args = $"test \"{slnFile}\" /p:CollectCoverage=true /p:CoverletOutput=\"{testOutputFolder}coverage\" {exludeAssembliesArg} /p:CoverletOutputFormat=\"json%2ccobertura\" /p:MergeWith=\"{testOutputFolder}coverage.json\" -m:1";
+            string noRestoreArg = string.Empty;
+            if (!CoverageResultsProvider.Instance.Options.RestorePackages)
+            {
+                noRestoreArg = " --no-restore";
+            }
+
+            string args = $"test \"{slnFile}\" /p:CollectCoverage=true /p:CoverletOutput=\"{testOutputFolder}coverage\" {exludeAssembliesArg} /p:CoverletOutputFormat=\"json%2ccobertura\" /p:MergeWith=\"{testOutputFolder}coverage.json\" -m:1{noRestoreArg}";
 
             return ("dotnet", args);
         }
@@ -191,7 +197,7 @@
                 {
                     UseShellExecute = true,
                     RedirectStandardOutput = false,
-                    CreateNoWindow = false
+                    CreateNoWindow = false 
                 };
 
                 var process = new System.Diagnostics.Process
@@ -225,7 +231,13 @@
                 exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
             }
 
-            string args = $"test \"{slnFile}\" /p:CoverletOutputFormat=\"cobertura\" --collect:\"XPlat Code Coverage\" --results-directory:\"{testOutputFolder}coverage\"";
+            string noRestoreArg = string.Empty;
+            if (!CoverageResultsProvider.Instance.Options.RestorePackages)
+            {
+                noRestoreArg = " --no-restore";
+            }
+
+            string args = $"test \"{slnFile}\" /p:CoverletOutputFormat=\"cobertura\" --collect:\"XPlat Code Coverage\" --results-directory:\"{testOutputFolder}coverage\"{noRestoreArg}";
 
             return ("dotnet", args);
         }

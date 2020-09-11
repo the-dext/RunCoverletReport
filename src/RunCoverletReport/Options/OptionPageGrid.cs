@@ -12,6 +12,7 @@
         private string excludeAssembliesPattern = "[*.Tests?]*,[*.UITests?]*";
         private bool useMSBuild = true;
         private IntegrationType integrationType = IntegrationType.Collector;
+        private bool restorePackages = true;
 
         [Category("Run Coverlet Report")]
         [DisplayName("Highlight - Covered Code Colour")]
@@ -56,6 +57,15 @@
         {
             get { return this.integrationType; }
             set { this.integrationType = value; }
+        }
+
+        [Category("Run Coverlet Report")]
+        [DisplayName("Restore NuGet Packages")]
+        [Description("Restore NuGet Packages before Test run")]
+        public bool RestorePackages
+        {
+            get { return this.restorePackages; }
+            set { this.restorePackages = value; }
         }
     }
 
