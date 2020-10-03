@@ -43,6 +43,10 @@ C# syntax in your .cs files will also be highlighted to indicate your code cover
 
 ## Version History
 
+### 1.10
+Better support for running projects that have a docker compose file by adding an option to control whether or not nuget packages are restored during the test run.
+This was contributed by woodworm83.
+
 ### 1.9
 Configurable Integration Type - Added an option to switch between relying on Coverlet.Collector (default) and Coverlet.MSBuild.
 Change this in Tools | Options | Run Coverlet Report.

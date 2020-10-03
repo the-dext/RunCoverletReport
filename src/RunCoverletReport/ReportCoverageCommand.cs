@@ -9,6 +9,7 @@
     using System.ComponentModel.Design;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using Task = System.Threading.Tasks.Task;
 
     /// <summary>
@@ -113,9 +114,7 @@
         private void ParseTestResults(string file)
         {
             var reader = new CoverageReader();
-
             var coverageResults = reader.ReadFile(file);
-
             CoverageResultsProvider.Instance?.SetResults(coverageResults);
         }
 
@@ -144,11 +143,26 @@
 
             this.RunCoverageTool(cmdArgs.cmd, cmdArgs.args);
 
-            var report = this.RunCoverageReporter(testOutputFolder);
+            if (!Directory.Exists(testOutputFolder))
+            {
+                var errorMessage = @"Unable to find test coverage output folder that Coverlet should have created.
+1. Check that your solution builds. You may also want to check your unit tests pass.
+2. Check you have both Coverlet and Report Generator setup correctly.
+3. If you have set 'Restore NuGet Packages' to 'False', make sure you have restored them yourself.
+4. If you have decided to use the 'Coverlet.Collector' NuGet package to collect code coverage make sure you have the 'Integration type' set to 'Collector'.
+If you are using 'Coverlet.MSBuild' then make sure to select 'MSBuild' instead.
+See 'Tools | Options | Run Coverlet Report' for settings.
 
-            this.OpenReport(webBrowserSvc, report.reportFile);
+Folder searched: " + testOutputFolder;
 
-            this.ParseTestResults(report.coberturaXmlFile);
+                this.ShowErrorMessage("Coverlet Output Not Found", errorMessage);
+            }
+            else
+            {
+                var report = this.RunCoverageReporter(testOutputFolder);
+                this.OpenReport(webBrowserSvc, report.reportFile);
+                this.ParseTestResults(report.coberturaXmlFile);
+            }
         }
 
         private string GetOutputFolder()
@@ -197,7 +211,7 @@
                 {
                     UseShellExecute = true,
                     RedirectStandardOutput = false,
-                    CreateNoWindow = false 
+                    CreateNoWindow = false
                 };
 
                 var process = new System.Diagnostics.Process
@@ -215,7 +229,7 @@
                 VsShellUtilities.ShowMessageBox(
                 this.package,
                 "Unable to generate coverage report. Make sure report generator is installed as a dotnet global tool\r\n\r\n" + ex.Message,
-                "Failed to create coverage report",
+                "Failed to Create Coverage Report",
                 OLEMSGICON.OLEMSGICON_INFO,
                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
                 OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
@@ -270,16 +284,31 @@
             }
             catch (Exception)
             {
-                VsShellUtilities.ShowMessageBox(
-                this.package,
-                "Unable to run dotnet test command. Make sure dotnet test works from a command line",
-                "Failed to create coverage report",
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-
+                this.ShowErrorMessage("Failed to create coverage report", "Unable to run dotnet test command. Make sure dotnet test works from a command line");
                 throw;
             }
+        }
+
+        private void ShowInfoMessage(string title, string message)
+        {
+            VsShellUtilities.ShowMessageBox(
+            this.package,
+            message,
+            title,
+            OLEMSGICON.OLEMSGICON_INFO,
+            OLEMSGBUTTON.OLEMSGBUTTON_OK,
+            OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+        }
+
+        private void ShowErrorMessage(string title, string message)
+        {
+            VsShellUtilities.ShowMessageBox(
+            this.package,
+            message,
+            title,
+            OLEMSGICON.OLEMSGICON_CRITICAL,
+            OLEMSGBUTTON.OLEMSGBUTTON_OK,
+            OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
         }
     }
 }

@@ -17,6 +17,8 @@
         /// <returns>The <see cref="FileCoverageResults"/>.</returns>
         public FileCoverageResults ReadFile(string filename)
         {
+            _ = filename ?? throw new ArgumentNullException(nameof(filename));
+
             if (!filename.ToLowerInvariant().EndsWith("cobertura.xml"))
             {
                 throw new NotSupportedException("File must be coverage.cobertura.xml");
