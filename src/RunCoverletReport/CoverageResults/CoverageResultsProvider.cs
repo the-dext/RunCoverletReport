@@ -44,13 +44,6 @@
             }
         }
 
-        //public Color CoveredColor { get => this.runCoverletReportPackage.CoveredColour; }
-        //public Color PartCoveredColor { get => this.runCoverletReportPackage.PartCoveredColour; }
-        //public Color UncoveredColor { get => this.runCoverletReportPackage.UncoveredColour; }
-        //public string ExcludeAssembliesPattern { get => this.runCoverletReportPackage.ExcludeAssembliesPattern; }
-
-        //public bool UseMSBuild { get => this.runCoverletReportPackage.UseMSBuild; }
-
         public OptionPageGrid Options { get => this.runCoverletReportPackage.OptionsPage; }
 
         /// <summary>
