@@ -1,47 +1,69 @@
-﻿using RunCoverletReport.CoverageResults;
-using System.Windows.Media;
-
-namespace RunCoverletReport.Highlighting
+﻿namespace RunCoverletReport.Highlighting
 {
+    using System.Windows.Media;
+
+    using RunCoverletReport.CoverageResults;
+
     public class SyntaxHighlighter
     {
-        public static GeometryDrawing CreateCoveredHighlight(Geometry geometry)
+        public GeometryDrawing CreateCoveredHighlight(Geometry geometry)
         {
-            var coveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.Options.CoveredColour);
-            coveredBrush.Freeze();
+            var penOptions = new PenHighlightOptions
+            {
+                BaseColour = CoverageResultsProvider.Instance.Options.CoveredBorderColour,
+                Style = ColourStyle.Solid,
+            };
 
-            var penBrush = new SolidColorBrush(Colors.Green);
-            penBrush.Freeze();
-            var coveredPen = new Pen(penBrush, 2);
-            coveredPen.Freeze();
+            var brushOptions = new BrushHighlightOptions
+            {
+                BaseColour = CoverageResultsProvider.Instance.Options.CoveredColour,
+                Style = ColourStyle.Solid
+            };
 
-            return new GeometryDrawing(coveredBrush, coveredPen, geometry);
+            var borderPen = new PenFactory().CreatePen(penOptions);
+            var fillBrush = new BrushFactory().CreateBrush(brushOptions);
+
+            // var fillBrush = new SolidColorBrush(CoverageResultsProvider.Instance.Options.CoveredColour);
+
+            return new GeometryDrawing(fillBrush, borderPen, geometry);
         }
 
-        public static GeometryDrawing CreatePartCoveredHighlight(Geometry geometry)
+        public GeometryDrawing CreatePartCoveredHighlight(Geometry geometry)
         {
-            var partCoveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.Options.PartCoveredColour);
-            partCoveredBrush.Freeze();
+            var penOptions = new PenHighlightOptions
+            {
+                BaseColour = CoverageResultsProvider.Instance.Options.PartCoveredBorderColour,
+                Style = ColourStyle.Solid,
+            };
 
-            var penBrush3 = new SolidColorBrush(Colors.DarkOrange);
-            penBrush3.Freeze();
-            var partCoveredPen = new Pen(penBrush3, 2);
-            partCoveredPen.Freeze();
+            var brushOptions = new BrushHighlightOptions
+            {
+                BaseColour = CoverageResultsProvider.Instance.Options.PartCoveredColour,
+                Style = ColourStyle.Solid
+            };
 
-            return new GeometryDrawing(partCoveredBrush, partCoveredPen, geometry);
+            var borderPen = new PenFactory().CreatePen(penOptions);
+            var fillBrush = new BrushFactory().CreateBrush(brushOptions);
+            return new GeometryDrawing(fillBrush, borderPen, geometry);
         }
 
-        internal static GeometryDrawing CreateUnCoveredHighlight(Geometry geometry)
+        internal GeometryDrawing CreateUnCoveredHighlight(Geometry geometry)
         {
-            var unCoveredBrush = new SolidColorBrush(CoverageResultsProvider.Instance.Options.UncoveredColour);
-            unCoveredBrush.Freeze();
+            var penOptions = new PenHighlightOptions
+            {
+                BaseColour = CoverageResultsProvider.Instance.Options.UncoveredBorderColour,
+                Style = ColourStyle.Solid,
+            };
 
-            var penBrush3 = new SolidColorBrush(Colors.DarkRed);
-            penBrush3.Freeze();
-            var unCoveredPen = new Pen(penBrush3, 2);
-            unCoveredPen.Freeze();
+            var brushOptions = new BrushHighlightOptions
+            {
+                BaseColour = CoverageResultsProvider.Instance.Options.UncoveredColour,
+                Style = ColourStyle.Solid
+            };
 
-            return new GeometryDrawing(unCoveredBrush, unCoveredPen, geometry);
+            var borderPen = new PenFactory().CreatePen(penOptions);
+            var fillBrush = new BrushFactory().CreateBrush(brushOptions);
+            return new GeometryDrawing(fillBrush, borderPen, geometry);
         }
     }
 }

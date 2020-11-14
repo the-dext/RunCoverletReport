@@ -1,14 +1,16 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Microsoft.VisualStudio.Shell;
-using RunCoverletReport.CoverageResults;
-using Task = System.Threading.Tasks.Task;
-using RunCoverletReport.Options;
-using System.Windows.Media;
-
-namespace RunCoverletReport
+﻿namespace RunCoverletReport
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Threading;
+
+    using Microsoft.VisualStudio.Shell;
+
+    using RunCoverletReport.CoverageResults;
+    using RunCoverletReport.Options;
+
+    using Task = System.Threading.Tasks.Task;
+
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
     /// </summary>
@@ -22,6 +24,8 @@ namespace RunCoverletReport
         /// RunCoverletReportPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "94d8f4b9-f634-42c1-9a6a-2f5a9b807733";
+
+        public OptionPageGrid OptionsPage { get => (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid)); }
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited,
@@ -49,7 +53,5 @@ namespace RunCoverletReport
             await ReportCoverageCommand.InitializeAsync(this);
             await ToggleCoverageHighlighting.InitializeAsync(this);
         }
-
-        public OptionPageGrid OptionsPage { get => (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid)); }
     }
 }
