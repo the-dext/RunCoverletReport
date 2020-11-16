@@ -17,7 +17,8 @@
             var brushOptions = new BrushHighlightOptions
             {
                 BaseColour = CoverageResultsProvider.Instance.Options.CoveredColour,
-                Style = ColourStyle.Solid
+                Style = CoverageResultsProvider.Instance.Options.HighlightStyle,
+                LinearEndColour = CoverageResultsProvider.Instance.Options.CoveredLinearEndColour,
             };
 
             var borderPen = new PenFactory().CreatePen(penOptions);
@@ -39,7 +40,8 @@
             var brushOptions = new BrushHighlightOptions
             {
                 BaseColour = CoverageResultsProvider.Instance.Options.PartCoveredColour,
-                Style = ColourStyle.Solid
+                Style = CoverageResultsProvider.Instance.Options.HighlightStyle,
+                LinearEndColour = CoverageResultsProvider.Instance.Options.PartCoveredLinearEndColour,
             };
 
             var borderPen = new PenFactory().CreatePen(penOptions);
@@ -58,7 +60,8 @@
             var brushOptions = new BrushHighlightOptions
             {
                 BaseColour = CoverageResultsProvider.Instance.Options.UncoveredColour,
-                Style = ColourStyle.Solid
+                Style = CoverageResultsProvider.Instance.Options.HighlightStyle,
+                LinearEndColour = CoverageResultsProvider.Instance.Options.UncoveredLinearEndColour,
             };
 
             var borderPen = new PenFactory().CreatePen(penOptions);
