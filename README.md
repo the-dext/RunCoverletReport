@@ -22,7 +22,16 @@ Follow this guide https://github.com/danielpalme/ReportGenerator/releases
 3. In your unit test projects add the Coverlet.MSBuild nuget package (due to a bug Coverlet.Collector support will be added in future, please follow [temporary instructions](https://github.com/the-dext/RunCoverletReport/issues/1#issuecomment-667349442) in the meantime).
 
 ## Usage
-Once installed click Tools | Run Code Coverage in Visual Studio.
+
+1. Configure your projects to collect code coverage by following the Quickstart guide here
+https://github.com/coverlet-coverage/coverlet#Quick-Start
+
+2. Configure the integration type used by Run Coverlet Report by setting the integration type that can be found in Tools | Options | Run Coverlet Report.    
+By default Coverlet.Collector is used, but if you get error messages when running the coverage report then check the Coverlet packages you are using, if you're using Coverlet.MSBuild instead of Collector then changing this option should allow coverate collection on your solution.
+Having a mixture of Coverlet.Collector and Coverlet.MSBuild dependencies in your project isn't supported, this extension will expect one or the other.
+
+To collect coverage and view a coverage report click Tools | Run Code Coverage.  
+
 'dotnet test' will then execute your unit tests and after a few moments **(provided all of your tests pass)** a report generator window will open showing the ReportGenerator output.
 C# syntax in your .cs files will also be highlighted to indicate your code coverage.
 
@@ -33,6 +42,25 @@ C# syntax in your .cs files will also be highlighted to indicate your code cover
 ![Run Coverlet Report Preview](src/RunCoverletReport/Art/RunCoverletReportPreview.gif)
 
 ## Version History
+
+### 1.11
+New syntax highlighting options and new layout on the options page.
+Borders and Highlights now support more styles (solid, linear and none), and colour options. 
+
+Use a combination of border and highlight styles to create the look that suits your development environment, for example Linear borders
+- Border Style = Linear
+- Border Linear End Colour = #00FFFFFF (transparent)
+- Highlight Style = None
+
+### 1.10
+Better support for running projects that have a docker compose file by adding an option to control whether or not nuget packages are restored during the test run.
+This was contributed by woodworm83.
+
+### 1.9
+Configurable Integration Type - Added an option to switch between relying on Coverlet.Collector (default) and Coverlet.MSBuild.
+Change this in Tools | Options | Run Coverlet Report.
+By default Coverlet.Collector is used, but if you get error messages when running the coverage report then check the Coverlet packages you are using, if you're using Coverlet.MSBuild instead of Collector then changing this option should allow coverate collection on your solution.
+Having a mixture of Coverlet.Collector and Coverlet.MSBuild dependencies in your project isn't supported, this extension will expect one or the other.
 
 ### 1.8.1
 Bug fix. When assembly pattern has comma characters these needed to be escaped for coverlet to successfully process the pattern.

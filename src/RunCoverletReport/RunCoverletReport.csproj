@@ -32,7 +32,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -52,8 +52,14 @@
     <Compile Include="CoverageResults\Models\CoverageResultType.cs" />
     <Compile Include="CoverageResults\Models\FileCoverageResults.cs" />
     <Compile Include="CoverageResults\Models\LineResult.cs" />
-    <Compile Include="Colours.cs" />
+    <Compile Include="Highlighting\BrushFactory.cs" />
+    <Compile Include="Highlighting\BrushHighlightOptions.cs" />
+    <Compile Include="Highlighting\ColourStyle.cs" />
+    <Compile Include="Highlighting\PenFactory.cs" />
+    <Compile Include="Highlighting\PenHighlightOptions.cs" />
     <Compile Include="Highlighting\SyntaxHighlighter.cs" />
+    <Compile Include="Options\IntegrationType.cs" />
+    <Compile Include="Options\IOptionPageGrid.cs" />
     <Compile Include="Options\OptionPageGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -92,6 +98,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.204" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.5.2047" />
+    <PackageReference Include="Roslynator.Analyzers">
+      <Version>3.0.0</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <VSCTCompile Include="RunCoverletReportPackage.vsct">

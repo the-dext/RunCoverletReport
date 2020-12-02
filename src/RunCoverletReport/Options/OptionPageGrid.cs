@@ -1,50 +1,99 @@
 ﻿namespace RunCoverletReport.Options
 {
-    using Microsoft.VisualStudio.Shell;
     using System.ComponentModel;
     using System.Windows.Media;
 
-    public class OptionPageGrid : DialogPage
+    using Microsoft.VisualStudio.Shell;
+
+    using RunCoverletReport.Highlighting;
+
+    public class OptionPageGrid : DialogPage, IOptionPageGrid
     {
-        private Color coveredColor = Color.FromArgb(50, 200, 255, 148);
-        private Color uncoveredColor = Color.FromArgb(50, 255, 161, 161);
-        private Color partCoveredColor = Color.FromArgb(50, 255, 195, 106);
-        private string excludeAssembliesPattern = "[*.Tests?]*,[*.UITests?]*";
+        private bool useMSBuild = true;
 
-        [Category("Run Coverlet Report")]
-        [DisplayName("Highlight - Covered Code Colour")]
-        [Description("ARGB Colour for covered code")]
-        public Color CoveredColour
-        {
-            get { return this.coveredColor; }
-            set { this.coveredColor = value; }
-        }
+        [Category("1. Highlighting")]
+        [DisplayName("Border Style")]
+        [Description("Choose between border styles")]
+        public ColourStyle BorderStyle { get; set; } = ColourStyle.Default;
 
-        [Category("Run Coverlet Report")]
-        [DisplayName("Highlight - Uncovered Code Colour")]
-        [Description("ARGB Colour for covered code")]
-        public Color UncoveredColour
-        {
-            get { return this.uncoveredColor; }
-            set { this.uncoveredColor = value; }
-        }
+        [Category("2. Covered Code")]
+        [DisplayName("Border Colour")]
+        [Description("ARGB Colour for covered code border")]
+        public Color CoveredBorderColour { get; set; } = Colors.Green;
 
-        [Category("Run Coverlet Report")]
-        [DisplayName("Highlight - Part Covered Code Colour")]
-        [Description("ARGB Colour for covered code")]
-        public Color PartCoveredColour
-        {
-            get { return this.partCoveredColor; }
-            set { this.partCoveredColor = value; }
-        }
-        
-        [Category("Run Coverlet Report")]
+        [Category("2. Covered Code")]
+        [DisplayName("Border Linear End Colour")]
+        [Description("ARGB end colour for border with Linear style")]
+        public Color CoveredBorderLinearEndColour { get; set; } = Colors.Transparent;
+
+        [Category("2. Covered Code")]
+        [DisplayName("Highlight Colour")]
+        [Description("ARGB Colour for covered code highlight")]
+        public Color CoveredColour { get; set; } = Color.FromArgb(50, 200, 255, 148);
+
+        [Category("2. Covered Code")]
+        [DisplayName("Linear End Colour")]
+        [Description("ARGB end colour for covered code when using linear highlighting")]
+        public Color CoveredLinearEndColour { get; set; } = Colors.Transparent;
+
+        [Category("5. Miscellaneous")]
         [DisplayName("Exclude Assemblies File Patterns")]
-        [Description("Comma separated file patterns for assemblies and types to be excluded from code coverage. Follows Coverlet standards. For example [*.tests]*,[*.uitests]* will ignore all types in assemblies with a .tests or .uitests suffix")]
-        public string ExcludeAssembliesPattern 
-        { 
-            get { return this.excludeAssembliesPattern; }
-            set { this.excludeAssembliesPattern = value; } 
-        }        
+        [Description("Comma separated file patterns for assemblies and types to be excluded from code coverage. Follows Coverlet standards. For example [*.tests]*,[*.uitests]* will ignore all types in assemblies with a .tests or .uitests suffix. NOTE: Requires Coverlet.MSBuild integration = true")]
+        public string ExcludeAssembliesPattern { get; set; } = "[*.Tests?]*,[*.UITests?]*";
+
+        [Category("1. Highlighting")]
+        [DisplayName("Highlight Style")]
+        [Description("Choose between solid (default) highlighting, or use linear highlighting")]
+        public ColourStyle HighlightStyle { get; set; } = ColourStyle.Default;
+
+        [Category("5. Miscellaneous")]
+        [DisplayName("Integration type")]
+        [Description("Set the integration type to match the Coverlet nuget packages you use. Either Coverlet.MSBuild or Coverlet.Collector.")]
+        public IntegrationType IntegrationType { get; set; } = IntegrationType.Collector;
+
+        [Category("4. Part Covered Code")]
+        [DisplayName("Border Colour")]
+        [Description("ARGB Colour for part covered code border")]
+        public Color PartCoveredBorderColour { get; set; } = Colors.DarkOrange;
+
+        [Category("4. Part Covered Code")]
+        [DisplayName("Border Linear End Colour")]
+        [Description("ARGB end colour for border with Linear style")]
+        public Color PartCoveredBorderLinearEndColour { get; set; } = Colors.Transparent;
+
+        [Category("4. Part Covered Code")]
+        [DisplayName("Highlight Colour")]
+        [Description("ARGB Colour for covered code")]
+        public Color PartCoveredColour { get; set; } = Color.FromArgb(50, 255, 195, 106);
+
+        [Category("4. Part Covered Code")]
+        [DisplayName("Linear End Colour")]
+        [Description("ARGB end colour for part covered code when using linear highlighting")]
+        public Color PartCoveredLinearEndColour { get; set; } = Colors.Transparent;
+
+        [Category("5. Miscellaneous")]
+        [DisplayName("Restore NuGet Packages")]
+        [Description("Restore NuGet Packages before Test run")]
+        public bool RestorePackages { get; set; } = true;
+
+        [Category("3. Uncovered Code")]
+        [DisplayName("Border Colour")]
+        [Description("ARGB Colour for uncovered code border")]
+        public Color UncoveredBorderColour { get; set; } = Colors.DarkRed;
+
+        [Category("3. Uncovered Code")]
+        [DisplayName("Highlight Colour")]
+        [Description("ARGB Colour for covered code")]
+        public Color UncoveredColour { get; set; } = Color.FromArgb(50, 255, 161, 161);
+
+        [Category("3. Uncovered Code")]
+        [DisplayName("Linear End Colour")]
+        [Description("ARGB end colour for uncovered code when using linear highlighting")]
+        public Color UncoveredLinearEndColour { get; set; } = Colors.Transparent;
+
+        [Category("3. Uncovered Code")]
+        [DisplayName("Border Linear End Colour")]
+        [Description("ARGB end colour for border with Linear style")]
+        public Color UncoveredBorderLinearEndColour { get; set; } = Colors.Transparent;
     }
 }
