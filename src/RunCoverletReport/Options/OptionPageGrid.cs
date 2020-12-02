@@ -22,6 +22,11 @@
         public Color CoveredBorderColour { get; set; } = Colors.Green;
 
         [Category("2. Covered Code")]
+        [DisplayName("Border Linear End Colour")]
+        [Description("ARGB end colour for border with Linear style")]
+        public Color CoveredBorderLinearEndColour { get; set; } = Colors.Transparent;
+
+        [Category("2. Covered Code")]
         [DisplayName("Highlight Colour")]
         [Description("ARGB Colour for covered code highlight")]
         public Color CoveredColour { get; set; } = Color.FromArgb(50, 200, 255, 148);
@@ -29,7 +34,7 @@
         [Category("2. Covered Code")]
         [DisplayName("Linear End Colour")]
         [Description("ARGB end colour for covered code when using linear highlighting")]
-        public Color CoveredLinearEndColour { get; set; } = Colors.White;
+        public Color CoveredLinearEndColour { get; set; } = Colors.Transparent;
 
         [Category("5. Miscellaneous")]
         [DisplayName("Exclude Assemblies File Patterns")]
@@ -52,6 +57,11 @@
         public Color PartCoveredBorderColour { get; set; } = Colors.DarkOrange;
 
         [Category("4. Part Covered Code")]
+        [DisplayName("Border Linear End Colour")]
+        [Description("ARGB end colour for border with Linear style")]
+        public Color PartCoveredBorderLinearEndColour { get; set; } = Colors.Transparent;
+
+        [Category("4. Part Covered Code")]
         [DisplayName("Highlight Colour")]
         [Description("ARGB Colour for covered code")]
         public Color PartCoveredColour { get; set; } = Color.FromArgb(50, 255, 195, 106);
@@ -59,7 +69,7 @@
         [Category("4. Part Covered Code")]
         [DisplayName("Linear End Colour")]
         [Description("ARGB end colour for part covered code when using linear highlighting")]
-        public Color PartCoveredLinearEndColour { get; set; } = Colors.White;
+        public Color PartCoveredLinearEndColour { get; set; } = Colors.Transparent;
 
         [Category("5. Miscellaneous")]
         [DisplayName("Restore NuGet Packages")]
@@ -79,6 +89,11 @@
         [Category("3. Uncovered Code")]
         [DisplayName("Linear End Colour")]
         [Description("ARGB end colour for uncovered code when using linear highlighting")]
-        public Color UncoveredLinearEndColour { get; set; } = Colors.White;
+        public Color UncoveredLinearEndColour { get; set; } = Colors.Transparent;
+
+        [Category("3. Uncovered Code")]
+        [DisplayName("Border Linear End Colour")]
+        [Description("ARGB end colour for border with Linear style")]
+        public Color UncoveredBorderLinearEndColour { get; set; } = Colors.Transparent;
     }
 }

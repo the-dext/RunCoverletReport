@@ -12,6 +12,7 @@
             {
                 BaseColour = CoverageResultsProvider.Instance.Options.CoveredBorderColour,
                 Style = CoverageResultsProvider.Instance.Options.BorderStyle,
+                LinearEndColour = CoverageResultsProvider.Instance.Options.CoveredBorderLinearEndColour,
             };
 
             var fillBrushOptions = new BrushHighlightOptions
@@ -33,6 +34,7 @@
             {
                 BaseColour = CoverageResultsProvider.Instance.Options.PartCoveredBorderColour,
                 Style = CoverageResultsProvider.Instance.Options.BorderStyle,
+                LinearEndColour = CoverageResultsProvider.Instance.Options.PartCoveredBorderLinearEndColour,
             };
 
             var fillBrushOptionsbrushOptions = new BrushHighlightOptions
@@ -53,6 +55,7 @@
             {
                 BaseColour = CoverageResultsProvider.Instance.Options.UncoveredBorderColour,
                 Style = CoverageResultsProvider.Instance.Options.BorderStyle,
+                LinearEndColour = CoverageResultsProvider.Instance.Options.UncoveredBorderLinearEndColour,
             };
 
             var fillBrushOptionsbrushOptions = new BrushHighlightOptions

@@ -43,6 +43,15 @@ C# syntax in your .cs files will also be highlighted to indicate your code cover
 
 ## Version History
 
+### 1.11
+New syntax highlighting options and new layout on the options page.
+Borders and Highlights now support more styles (solid, linear and none), and colour options. 
+
+Use a combination of border and highlight styles to create the look that suits your development environment, for example Linear borders
+- Border Style = Linear
+- Border Linear End Colour = #00FFFFFF (transparent)
+- Highlight Style = None
+
 ### 1.10
 Better support for running projects that have a docker compose file by adding an option to control whether or not nuget packages are restored during the test run.
 This was contributed by woodworm83.
