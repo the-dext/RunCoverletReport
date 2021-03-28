@@ -43,6 +43,11 @@ C# syntax in your .cs files will also be highlighted to indicate your code cover
 
 ## Version History
 
+### 1.12
+Bug fix for solutions where two or more projects are using linked files. Previously the code attempted to add a line result for the same underlying file multiple times.
+Now the most optimistic result for that file will be used to report coverage on that file across all projects.
+Thanks to @StingyJack for this fix.
+
 ### 1.11
 New syntax highlighting options and new layout on the options page.
 Borders and Highlights now support more styles (solid, linear and none), and colour options. 
