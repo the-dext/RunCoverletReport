@@ -84,5 +84,13 @@ namespace RunCoverletReport.CoverageResults.Models
                 }
             }
         }
+
+        public override string ToString()
+        {
+            var returnValue = $"{nameof(LineNumber)} : {LineNumber}, {nameof(Branch)} : {Branch}, {nameof(Hits)} : {Hits}, " +
+                $"{nameof(HasPartCoverage)} : {HasPartCoverage}, {nameof(Result)} : {Result}, {nameof(ConditionCoverages)} : {ConditionCoverages}, " +
+                $"{nameof(Conditions)} : {(string.Join(",", Conditions))}";
+            return returnValue;
+        }
     }
 }
