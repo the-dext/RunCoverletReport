@@ -239,10 +239,10 @@ Folder searched: " + testOutputFolder;
 
         private (string cmd, string args) GetCommandArgsForCoverletCollector(string slnFile, string testOutputFolder)
         {
-            string exludeAssembliesArg = string.Empty;
+            string excludeAssembliesArg = string.Empty;
             if (!string.IsNullOrWhiteSpace(CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern))
             {
-                exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
+                excludeAssembliesArg = $"-- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=\"{CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
             }
 
             string noRestoreArg = string.Empty;
@@ -251,7 +251,7 @@ Folder searched: " + testOutputFolder;
                 noRestoreArg = " --no-restore";
             }
 
-            string args = $"test \"{slnFile}\" /p:CoverletOutputFormat=\"cobertura\" --collect:\"XPlat Code Coverage\" --results-directory:\"{testOutputFolder}coverage\"{noRestoreArg}";
+            string args = $"test \"{slnFile}\" /p:CoverletOutputFormat=\"cobertura\" --collect:\"XPlat Code Coverage\" --results-directory:\"{testOutputFolder}coverage\"{noRestoreArg} {excludeAssembliesArg}";
 
             return ("dotnet", args);
         }
