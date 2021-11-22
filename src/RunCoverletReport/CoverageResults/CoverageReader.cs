@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Xml;
     using RunCoverletReport.CoverageResults.Models;
 
@@ -33,7 +34,7 @@
             {
                 var className = classNode.Attributes["name"].Value;
                 var classFileName = classNode.Attributes["filename"].Value;
-                var lineCoverage = classNode.Attributes["line-rate"] == null ? 0 : double.Parse(classNode.Attributes["line-rate"].Value);
+                var lineCoverage = classNode.Attributes["line-rate"] == null ? 0 : double.Parse(classNode.Attributes["line-rate"].Value, CultureInfo.InvariantCulture);
                 var linesNode = classNode.SelectSingleNode("lines");
 
                 var mergeClassResults = classResults.ContainsKey(classFileName);
