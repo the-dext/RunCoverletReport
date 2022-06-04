@@ -19,6 +19,7 @@
         Color PartCoveredColour { get; set; }
         Color PartCoveredLinearEndColour { get; set; }
         bool RestorePackages { get; set; }
+        bool UseRunSettings { get; set; }
         Color UncoveredBorderColour { get; set; }
         Color UncoveredColour { get; set; }
         Color UncoveredLinearEndColour { get; set; }
