@@ -76,6 +76,11 @@
         [Description("Restore NuGet Packages before Test run")]
         public bool RestorePackages { get; set; } = true;
 
+        [Category("5. Miscellaneous")]
+        [DisplayName("Use Run Settings")]
+        [Description("Use .runsettings file on solution root folder")]
+        public bool UseRunSettings { get; set; }
+
         [Category("3. Uncovered Code")]
         [DisplayName("Border Colour")]
         [Description("ARGB Colour for uncovered code border")]

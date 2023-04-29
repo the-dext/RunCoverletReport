@@ -189,9 +189,39 @@ Folder searched: " + testOutputFolder;
                 noRestoreArg = " --no-restore";
             }
 
-            string args = $"test \"{slnFile}\" /p:CollectCoverage=true /p:CoverletOutput=\"{testOutputFolder}coverage\" {exludeAssembliesArg} /p:CoverletOutputFormat=\"json%2ccobertura\" /p:MergeWith=\"{testOutputFolder}coverage.json\" -m:1{noRestoreArg}";
+            string runSettingsArg = string.Empty;
+            if (CoverageResultsProvider.Instance.Options.UseRunSettings)
+            {
+                var runSettingsPath = GetRunsettingsPath();
+                if(!String.IsNullOrEmpty(runSettingsPath))
+                {
+                    runSettingsArg = $"--settings {runSettingsPath}";
+                }
+            }
+
+            string args = $"test \"{slnFile}\" /p:CollectCoverage=true {runSettingsArg} /p:CoverletOutput=\"{testOutputFolder}coverage\" {exludeAssembliesArg} /p:CoverletOutputFormat=\"json%2ccobertura\" /p:MergeWith=\"{testOutputFolder}coverage.json\" -m:1{noRestoreArg}";
 
             return ("dotnet", args);
+        }
+
+        /// <summary>
+        /// This function searches for a runsettings file on solution main folder.
+        /// If none is found returns a empty string
+        /// </summary>
+        private string GetRunsettingsPath()
+        {
+            string runsettingsPath = string.Empty;
+
+            var dte = (DTE2)this.ServiceProvider.GetServiceAsync(typeof(DTE)).Result;
+            var slnFullName =  Directory.GetParent(dte.Solution.FullName).ToString();
+
+            string[] files = Directory.GetFiles(slnFullName, ".*runsettings");
+            if(files.Length > 0)
+            {
+                runsettingsPath = files[0];
+            }
+
+            return runsettingsPath;
         }
 
         /// <summary>
@@ -239,10 +269,10 @@ Folder searched: " + testOutputFolder;
 
         private (string cmd, string args) GetCommandArgsForCoverletCollector(string slnFile, string testOutputFolder)
         {
-            string exludeAssembliesArg = string.Empty;
+            string excludeAssembliesArg = string.Empty;
             if (!string.IsNullOrWhiteSpace(CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern))
             {
-                exludeAssembliesArg = $"/p:Exclude=\"{CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
+                excludeAssembliesArg = $"-- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=\"{CoverageResultsProvider.Instance.Options.ExcludeAssembliesPattern.Replace(",", "%2c")}\"";
             }
 
             string noRestoreArg = string.Empty;
@@ -251,7 +281,17 @@ Folder searched: " + testOutputFolder;
                 noRestoreArg = " --no-restore";
             }
 
-            string args = $"test \"{slnFile}\" /p:CoverletOutputFormat=\"cobertura\" --collect:\"XPlat Code Coverage\" --results-directory:\"{testOutputFolder}coverage\"{noRestoreArg}";
+            string runSettingsArg = string.Empty;
+            if (CoverageResultsProvider.Instance.Options.UseRunSettings)
+            {
+                var runSettingsPath = GetRunsettingsPath();
+                if (!String.IsNullOrEmpty(runSettingsPath))
+                {
+                    runSettingsArg = $"--settings {runSettingsPath}";
+                }
+            }
+
+            string args = $"test \"{slnFile}\" /p:CoverletOutputFormat=\"cobertura\" {runSettingsArg} --collect:\"XPlat Code Coverage\" --results-directory:\"{testOutputFolder}coverage\"{noRestoreArg} {excludeAssembliesArg}";
 
             return ("dotnet", args);
         }
