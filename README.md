@@ -28,11 +28,11 @@ Search for 'Run Coverlet Report' or 'Run Coverlet Report 2022' depending on your
 2. Install Report Generator as a global tool
 Follow this guide https://github.com/danielpalme/ReportGenerator/releases
 
-3. In your unit test projects add the Coverlet.MSBuild nuget package (due to a bug Coverlet.Collector support will be added in future, please follow [temporary instructions](https://github.com/the-dext/RunCoverletReport/issues/1#issuecomment-667349442) in the meantime).
+3. In your unit test projects add the Coverlet.MSBuild Nuget package (due to a bug Coverlet.Collector support will be added in future, please follow [temporary instructions](https://github.com/the-dext/RunCoverletReport/issues/1#issuecomment-667349442) in the meantime).
 
 ## Usage
 
-1. Configure your projects to collect code coverage by following the Quickstart guide here
+1. Configure your projects to collect code coverage by following the Quick-start guide here
 https://github.com/coverlet-coverage/coverlet#Quick-Start
 
 2. Configure the integration type used by Run Coverlet Report by setting the integration type that can be found in Tools | Options | Run Coverlet Report.    
@@ -52,7 +52,12 @@ C# syntax in your .cs files will also be highlighted to indicate your code cover
 
 ## Version History
 
-### 2.00
+### 2.1.0
+Added support for using a run-settings file at solution level with your unit tests.
+To turn this on go to `Tools | Options | Run Coverlet Report` and set `Use Run Settings` to true (under 5. Miscellaneous).
+Thanks to cdessana for this contribution.
+
+### 2.0.0
 *Visual Studio 2022* Onwards
 
 The previous version of this extension supports VS2019 but going forwards the extension will target Visual Studio 2022 only.
